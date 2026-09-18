@@ -99,4 +99,4 @@ ppm test
 
 ## 📄 License
 
-**MIT** — this is a derivative work of an MIT-licensed project; the original license notice is preserved in `LICENSE.txt`.
+**MIT** — this is a derivative work of an MIT-licensed project; the original license notice is preserved in `LICENSE.md`.

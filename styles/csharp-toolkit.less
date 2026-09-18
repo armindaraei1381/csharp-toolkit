@@ -1,62 +1,72 @@
 @import "ui-variables";
 
-// ─── Tune-me knobs ────────────────────────────────────────────────────
-// Change these to adjust the whole glass look in one place.
-@cse-blur:           28px;   // backdrop blur strength
-@cse-saturation:     165%;   // backdrop color saturation
-@cse-panel-opacity:  80%;    // panel background opacity (higher = more solid)
-@cse-radius:         12px;   // panel corner radius
-@cse-accent-1:       #7c5cff; // header gradient start (violet)
-@cse-accent-2:       #3d8bfd; // header gradient middle (blue)
-@cse-accent-3:       #2bd58c; // header gradient end (green)
+// ══════════════════════════════════════════════════════════════════════
+// Design tokens — shared by the dialogs so they stay consistent with
+// each other and with the active Pulsar theme.
+// ══════════════════════════════════════════════════════════════════════
+@panel-radius:  @component-border-radius;
+@row-radius:    8px;                        // rounded hover/selection pill
 
-// ─── Shared glass panel ───────────────────────────────────────────────
-.csharp-toolkit-glass() {
-  background: fade(@overlay-background-color, @cse-panel-opacity);
-  backdrop-filter: blur(@cse-blur) saturate(@cse-saturation);
-  -webkit-backdrop-filter: blur(@cse-blur) saturate(@cse-saturation);
-  border: 1px solid fade(@text-color, 14%);
-  border-radius: @cse-radius;
-  box-shadow:
-    0 24px 64px rgba(0, 0, 0, .40),
-    0 4px 12px rgba(0, 0, 0, .22),
-    inset 0 1px 0 fade(#fff, 7%);
+// Hairline separators — sit in the gap BETWEEN rows, never over text
+@row-separator: fade(@text-color, 8%);
+
+// Standard modal panel chrome (input dialog / property picker)
+.csharp-toolkit-panel() {
+  background-color: @overlay-background-color;
+  border: 1px solid @overlay-border-color;
+  border-radius: @panel-radius;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
 }
 
-.csharp-toolkit-mini-editor() {
-  atom-text-editor[mini] {
-    border-radius: 8px;
-    background-color: fade(@input-background-color, 65%);
-    border: 1px solid fade(@text-color, 12%);
-    color: @text-color;
+// Section header — spacing only; titles never carry divider lines
+.csharp-toolkit-header() {
+  padding-bottom: @component-padding / 2;
+}
 
-    &.is-focused,
-    &:focus {
-      border-color: fade(@text-color-info, 65%);
-      box-shadow: 0 0 0 3px fade(@text-color-info, 16%);
-    }
+// Title — clearly larger and bolder than the caption
+.csharp-toolkit-title() {
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.35;
+  color: @text-color;
+}
+
+// Caption — smaller and muted
+.csharp-toolkit-caption() {
+  font-size: .88em;
+  line-height: 1.45;
+  color: @text-color-subtle;
+}
+
+// Input field with a visible border and focus state
+.csharp-toolkit-field() {
+  border-radius: @panel-radius;
+  border: 1px solid @input-border-color;
+  background-color: @input-background-color;
+  color: @text-color;
+
+  &.is-focused,
+  &:focus {
+    border-color: @text-color-info;
   }
 }
 
 // ══════════════════════════════════════════════════════════════════════
-// ── Modal input dialog (project name / destination) ───────────────────
+// ── Modal input dialog (project name / destination / class name) ──────
 // ══════════════════════════════════════════════════════════════════════
 .csharpextensions-input-dialog {
-  .csharp-toolkit-glass();
-  .csharp-toolkit-mini-editor();
+  .csharp-toolkit-panel();
 
   width: 480px;
   max-width: 90vw;
-  padding: @component-padding * 1.6;
-  overflow: hidden;
+  padding: @component-padding * 1.5;
 
   .csharpextensions-input-dialog-prompt {
+    .csharp-toolkit-header();
+    .csharp-toolkit-title();
+
     display: block;
     margin-bottom: @component-padding;
-    font-weight: 600;
-    font-size: 1.05em;
-    letter-spacing: .01em;
-    color: @text-color;
 
     &:before {
       margin-right: @component-padding / 2;
@@ -64,13 +74,23 @@
     }
   }
 
-  .csharpextensions-input-dialog-message {
-    margin-top: @component-padding / 2;
-    min-height: 1.6em;
-    font-size: .92em;
+  atom-text-editor[mini] {
+    .csharp-toolkit-field();
+  }
 
-    &.error { color: @text-color-error; }
-    &.hint  { color: @text-color-subtle; }
+  .csharpextensions-input-dialog-message {
+    .csharp-toolkit-caption();
+
+    margin-top: @component-padding / 1.6;
+    min-height: 1.4em;
+
+    &.error {
+      color: @text-color-error;
+      font-weight: 500;
+    }
+    &.hint {
+      color: @text-color-subtle;
+    }
   }
 }
 
@@ -78,19 +98,18 @@
 // ── Constructor property picker ───────────────────────────────────────
 // ══════════════════════════════════════════════════════════════════════
 .csharpextensions-constructor-picker {
-  .csharp-toolkit-glass();
+  .csharp-toolkit-panel();
 
   width: 500px;
   max-width: 90vw;
-  padding: @component-padding * 1.6;
+  padding: @component-padding * 1.5;
   outline: none;
-  overflow: hidden;
 
   .csharpextensions-picker-title {
-    margin-bottom: @component-padding / 2;
-    font-weight: 600;
-    font-size: 1.05em;
-    color: @text-color;
+    .csharp-toolkit-header();
+    .csharp-toolkit-title();
+
+    margin-bottom: @component-padding / 1.6;
 
     &:before { color: @text-color-info; }
   }
@@ -98,30 +117,26 @@
   .csharpextensions-picker-toolbar {
     display: flex;
     gap: @component-padding / 2;
-    margin-bottom: @component-padding / 2;
-
-    .btn { border-radius: 6px; }
+    margin-bottom: @component-padding / 1.6;
   }
 
   .csharpextensions-picker-list {
-    max-height: 320px;
+    max-height: 300px;
     overflow-y: auto;
-    padding: @component-padding / 2;
     border: 1px solid fade(@text-color, 10%);
-    border-radius: 8px;
-    background-color: fade(@base-background-color, 55%);
+    border-radius: @panel-radius;
 
     label.csharpextensions-picker-row {
       display: flex;
       align-items: center;
       gap: @component-padding / 2;
-      padding: 3px 6px;
+      padding: @component-padding / 3 @component-padding / 1.5;
       margin: 0;
-      border-radius: 5px;
+      border-bottom: 1px solid @row-separator;
       cursor: pointer;
-      transition: background-color .12s ease;
 
-      &:hover { background-color: fade(@background-color-highlight, 60%); }
+      &:last-child { border-bottom: none; }
+      &:hover      { background-color: @background-color-highlight; }
 
       .property-type { color: @text-color-subtle; }
     }
@@ -131,177 +146,139 @@
     display: flex;
     justify-content: flex-end;
     gap: @component-padding / 2;
-    margin-top: @component-padding;
-
-    .btn { border-radius: 6px; }
+    margin-top: @component-padding / 1.6;
+    padding-top: @component-padding / 1.6;
   }
 }
 
 // ══════════════════════════════════════════════════════════════════════
 // ── .NET project template select list ─────────────────────────────────
+// Native theme panel chrome (no glass). Hover and selection are rendered
+// by THIS stylesheet as full-coverage rounded pills that wrap the icon
+// and both text lines — the theme's flat, half-sized hover never applies
+// because these rules win on specificity. Rows are separated by a soft
+// hairline that fades out under a pill so the highlight stays clean.
 // ══════════════════════════════════════════════════════════════════════
-.csharp-toolkit-select-list-modal {
-  .csharp-toolkit-glass();
-  .csharp-toolkit-mini-editor();
+atom-panel.modal.csharp-toolkit-select-list-host {
+  // Native theme chrome; extra room so the pills don't touch the walls
+  padding: @component-padding / 2 @component-padding / 1.5;
 
-  position: relative;
-  width: 620px;
-  max-width: 92vw;
-  padding: @component-padding * 1.6;
-  overflow: hidden;
-
-  // Slim gradient accent bar on the top edge
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, @cse-accent-1, @cse-accent-2 45%, @cse-accent-3);
-    opacity: .9;
+  // Query field — native theme styling, small gap before the list
+  atom-text-editor[mini] {
+    margin-bottom: @component-padding / 2;
   }
 
-  // ── Header ──
-  .csharp-toolkit-select-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 12px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid fade(@text-color, 10%);
+  ol.list-group {
+    max-height: 320px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 2px 0;
 
-    .header-badge {
-      flex-shrink: 0;
-      width: 38px;
-      height: 38px;
+    li.list-item {
+      cursor: pointer;
+      margin: 2px 2px;                 // gap that hosts the separator line
+      padding: 6px 10px;               // generous pill padding
+      border-radius: @row-radius;
+      border-bottom: 1px solid @row-separator;
+
+      &:last-child { border-bottom: none; }
+
+      // Hover: full-coverage rounded pill over icon + text.
+      // This replaces the theme's flat hover entirely (higher specificity).
+      &:hover:not(.selected) {
+        background-color: @background-color-highlight;
+        border-bottom-color: transparent;  // keep the pill clean
+      }
+
+      // Selection: same pill shape, theme's selected color.
+      &.selected,
+      &.selected:hover {
+        background-color: @background-color-selected;
+        border-bottom-color: transparent;
+        color: @text-color-selected;
+
+        .primary-line { color: @text-color-selected; }
+        .secondary-line {
+          color: @text-color-selected;
+          opacity: .8;
+        }
+      }
+    }
+
+    // ── Row layout: icon badge + text block ──
+    li.csharp-toolkit-template-row {
       display: flex;
       align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 19px;
-      background: linear-gradient(135deg, @cse-accent-1, @cse-accent-2);
-      box-shadow: 0 4px 14px fade(@cse-accent-1, 35%);
-    }
-
-    .header-text {
-      min-width: 0;
-
-      .header-title {
-        font-weight: 700;
-        font-size: 1.1em;
-        letter-spacing: .01em;
-        color: @text-color;
-      }
-
-      .header-subtitle {
-        margin-top: 1px;
-        font-size: .85em;
-        color: @text-color-subtle;
-      }
-    }
-  }
-
-  // ── List ──
-  ol.csharp-toolkit-select-list {
-    margin: @component-padding / 2 0 0 0;
-    padding: 0;
-    max-height: 380px;
-    overflow-y: auto;
-    list-style: none;
-    border: 1px solid fade(@text-color, 10%);
-    border-radius: 10px;
-    background-color: fade(@base-background-color, 45%);
-
-    li.csharp-toolkit-template-row {
-      display: grid;
-      grid-template-columns: 34px 1fr 16px;
-      align-items: center;
-      gap: 12px;
-      margin: 2px 4px;
-      padding: 7px 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color .12s ease;
-
-      &.selected {
-        background-color: fade(@background-color-selected, 70%);
-        box-shadow: inset 0 0 0 1px fade(@text-color, 8%);
-      }
+      gap: 10px;
 
       .template-icon {
-        width: 34px;
-        height: 34px;
-        display: flex;
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 9px;
-        font-size: 16px;
+        border-radius: 7px;
+        background-color: fade(@text-color, 8%);
+        color: @text-color-subtle;
+        font-size: 14px;
+        transition: background-color .12s ease, color .12s ease;
 
-        &:before { margin: 0; } // neutralize octicon default margins
+        // Center the glyph exactly — drop octicon's default margins
+        &:before {
+          margin-right: 0;
+          margin-left: 0;
+        }
       }
 
       .template-content {
+        flex: 1;
         min-width: 0;
 
-        .template-name {
-          font-weight: 600;
+        // Some themes absolutely position `.two-lines` children; reset that
+        // so the two lines stack normally inside the flex content block.
+        .primary-line,
+        .secondary-line {
+          display: block;
+          position: static;
+        }
+
+        .primary-line {
           color: @text-color;
+          font-weight: 500;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
 
-        .template-meta {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          margin-top: 2px;
-          min-width: 0;
-
-          .chip {
-            display: inline-flex;
-            align-items: center;
-            height: 16px;
-            padding: 0 6px;
-            border-radius: 4px;
-            font-size: 10.5px;
-            font-weight: 600;
-            letter-spacing: .02em;
-            white-space: nowrap;
-          }
-
-          .template-tags {
-            color: @text-color-subtle;
-            font-size: .88em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
+        .secondary-line {
+          color: @text-color-subtle;
+          font-size: .9em;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
 
-      .row-chevron {
-        color: @text-color-subtle;
-        opacity: 0;
-        transition: opacity .12s ease;
-
-        &:before { margin: 0; }
+      // Icon follows the pill on selection
+      &.selected .template-icon {
+        color: @text-color-selected;
+        background-color: fade(#ffffff, 12%);
       }
-
-      &:hover .row-chevron,
-      &.selected .row-chevron { opacity: .8; }
     }
 
     li.csharp-toolkit-select-list-empty {
+      .csharp-toolkit-caption();
       padding: @component-padding;
-      color: @text-color-subtle;
       text-align: center;
-      font-style: italic;
+      cursor: default;
+      border-bottom: none;
+      border-radius: 0;
+
+      &:hover { background-color: transparent; }
     }
 
-    // Slim custom scrollbar
+    // Slim scrollbar
     &::-webkit-scrollbar { width: 8px; }
     &::-webkit-scrollbar-track { background: transparent; }
     &::-webkit-scrollbar-thumb {
@@ -312,58 +289,40 @@
     }
   }
 
-  // ── Footer: keyboard hints + result counter ──
+  // Footer — muted small text, borderless key hints, no divider
   .csharp-toolkit-select-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: @component-padding;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid fade(@text-color, 10%);
+    margin-top: @component-padding / 2;
     color: @text-color-subtle;
     font-size: 11px;
 
     .hints {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
-
-      .hint {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
     }
 
-    .count {
-      white-space: nowrap;
-      opacity: .9;
+    .hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
-  }
 
-  kbd {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 4px;
-    border: 1px solid fade(@text-color, 20%);
-    border-bottom-width: 2px;
-    background: fade(@text-color, 8%);
-    color: @text-color;
-    font-size: 10px;
-    font-family: inherit;
+    kbd {
+      border: none;
+      background: transparent;
+      padding: 0;
+      min-width: 0;
+      height: auto;
+      border-radius: 0;
+      color: @text-color;
+      font-size: inherit;
+      font-family: inherit;
+    }
+
+    .count { white-space: nowrap; }
   }
 }
-
-// ── Accent palette (icon badges & chips) ──────────────────────────────
-.accent-blue   { color: #4c9aff; background: fade(#4c9aff, 15%); }
-.accent-green  { color: #3fbf7f; background: fade(#3fbf7f, 15%); }
-.accent-orange { color: #f0954c; background: fade(#f0954c, 15%); }
-.accent-violet { color: #a371f7; background: fade(#a371f7, 15%); }
-.accent-cyan   { color: #2bc0d6; background: fade(#2bc0d6, 15%); }
-.accent-teal   { color: #2ec4a5; background: fade(#2ec4a5, 15%); }
-.accent-gray   { color: @text-color; background: fade(@text-color, 10%); }
