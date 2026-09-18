@@ -6,7 +6,6 @@ Create C# classes, interfaces, enums, structs, records, static/abstract classes,
 
 This package is a full, native Pulsar port of the popular `csharpextensions` extension for VS Code (and its KreativJos fork), rebuilt on top of the Atom/Pulsar APIs (`atom.commands`, `atom.workspace`, the tree-view service, Pulsar menus & keymaps) — plus a set of modern C# extras.
 
-> **demo**
 
 ---
 
