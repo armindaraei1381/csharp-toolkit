@@ -1,0 +1,19 @@
+${testusing}
+
+namespace ${namespace}
+{
+   ${testclassattribute}
+   public class ${classname}
+   {
+       ${testmethodattribute}
+       public void ${testmethodname}()
+       {
+           // Arrange
+
+           // Act
+
+           // Assert
+           ${asserttrue}
+       }
+   }
+}

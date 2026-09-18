@@ -1,0 +1,19 @@
+using NUnit.Framework;
+
+namespace ${namespace}
+{
+    [TestFixture]
+    public class ${classname}
+    {
+        [Test]
+        public void ${testmethodname}()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+            Assert.That(true, Is.True);
+        }
+    }
+}

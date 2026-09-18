@@ -1,0 +1,18 @@
+using Xunit;
+
+namespace ${namespace}
+{
+    public class ${classname}
+    {
+        [Fact]
+        public void ${testmethodname}()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+            Assert.True(true);
+        }
+    }
+}

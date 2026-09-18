@@ -1,0 +1,17 @@
+{
+  ".tree-view": {
+    "ctrl-alt-n": "csharpextensions:new-class"
+  },
+  "atom-workspace atom-text-editor:not([mini])": {
+    "ctrl-alt-shift-c": "csharpextensions:constructor-from-properties",
+    "ctrl-alt-shift-e": "csharpextensions:constructor-from-properties-expression-body"
+  },
+  ".csharpextensions-input-dialog atom-text-editor[mini]": {
+    "enter": "core:confirm",
+    "escape": "core:cancel"
+  },
+  ".csharpextensions-constructor-picker": {
+    "enter": "core:confirm",
+    "escape": "core:cancel"
+  }
+}

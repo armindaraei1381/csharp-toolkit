@@ -1,0 +1,118 @@
+{
+  "name": "csharpextensions-pulsar",
+  "main": "./lib/main",
+  "version": "0.2.0",
+  "description": "Create C# classes, interfaces, enums, structs, records, controllers, Razor pages, UWP views and constructors from the tree view or the command palette. A native Pulsar port of the popular csharpextensions extension for VS Code.",
+  "keywords": [
+    "csharp", "c#", "dotnet", "class", "interface", "enum",
+    "struct", "record", "constructor", "template", "scaffolding",
+    "mvc", "razor", "uwp", "xunit", "nunit", "mstest"
+  ],
+  "repository": "https://github.com/armindaraei1381/csharpextensions-pulsar",
+  "license": "MIT",
+  "author": {
+    "name": "Armin Daraei",
+    "url": "https://github.com/armindaraei1381"
+  },
+  "engines": {
+    "atom": ">=1.28.0 <2.0.0"
+  },
+  "configSchema": {
+    "namespaceStyle": {
+      "title": "Namespace style",
+      "description": "Block scoped (`namespace X { ... }`) or file-scoped (`namespace X;` — C# 10+).",
+      "type": "string",
+      "default": "block",
+      "order": 1,
+      "enum": [
+        { "value": "block", "description": "Block scoped — namespace X { ... }" },
+        { "value": "file-scoped", "description": "File scoped — namespace X;" }
+      ]
+    },
+    "enableNullable": {
+      "title": "Nullable reference types",
+      "description": "Adds `#nullable enable` at the top of every generated C# file.",
+      "type": "boolean",
+      "default": false,
+      "order": 2
+    },
+    "interfacePrefix": {
+      "title": "Interface prefix",
+      "description": "Prefix automatically prepended to new interface names. Set to an empty string to disable.",
+      "type": "string",
+      "default": "I",
+      "order": 3
+    },
+    "braceStyle": {
+      "title": "Brace style",
+      "type": "string",
+      "default": "allman",
+      "order": 4,
+      "enum": [
+        { "value": "allman", "description": "Allman — opening brace on its own line" },
+        { "value": "k&r", "description": "K&R — opening brace on the same line" }
+      ]
+    },
+    "constructorStyle": {
+      "title": "Default constructor style",
+      "description": "Style used by `Constructor from Properties` (the separate `...expression-body` command always uses expression-bodied).",
+      "type": "string",
+      "default": "regular",
+      "order": 5,
+      "enum": [
+        { "value": "regular", "description": "Classic block body" },
+        { "value": "expression-bodied", "description": "Expression bodied (`=>`)" }
+      ]
+    },
+    "testFramework": {
+      "title": "Unit test framework",
+      "description": "Framework used by the generic `New Unit Test Class` command.",
+      "type": "string",
+      "default": "xunit",
+      "order": 6,
+      "enum": [
+        { "value": "xunit", "description": "xUnit" },
+        { "value": "mstest", "description": "MSTest" },
+        { "value": "nunit", "description": "NUnit" }
+      ]
+    },
+    "confirmUsingDirectives": {
+      "title": "Confirm adding using directives",
+      "description": "Ask before adding missing `using` directives when generating a constructor. When unchecked they are added silently.",
+      "type": "boolean",
+      "default": true,
+      "order": 7
+    },
+    "language": {
+      "title": "Message language",
+      "type": "string",
+      "default": "en",
+      "order": 8,
+      "enum": [
+        { "value": "en", "description": "English" },
+        { "value": "fa", "description": "فارسی (Persian)" }
+      ]
+    },
+    "hideAspNetGroupWhenNotNeeded": {
+      "title": "Hide ASP.NET group in non-ASP.NET projects",
+      "description": "Detects Microsoft.AspNetCore.* in the nearest .csproj and hides the Controller / Api Controller / Razor Page group when the project is not ASP.NET Core. Unknown projects (no .csproj) keep the group.",
+      "type": "boolean",
+      "default": true,
+      "order": 9
+    },
+    "hideUwpGroupWhenNotNeeded": {
+      "title": "Hide UWP group in non-UWP projects",
+      "description": "Detects UWP/WinUI markers (UniversalWindowsPlatform, WindowsAppSDK, WinUI, UAP target, UseWinUI) in the nearest .csproj and hides the UWP group when the project is not UWP/WinUI.",
+      "type": "boolean",
+      "default": true,
+      "order": 10
+    }
+  },
+  "consumedServices": {
+    "tree-view": {
+      "versions": {
+        "^1.0.0": "consumeTreeView"
+      }
+    }
+  }
+}

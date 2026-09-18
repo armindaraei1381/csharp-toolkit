@@ -1,0 +1,90 @@
+@import "ui-variables";
+
+// ── Modal input dialog ────────────────────────────────────────────────
+.csharpextensions-input-dialog {
+  width: 440px;
+  max-width: 90vw;
+  padding: @component-padding * 1.5;
+  border-radius: @component-border-radius;
+  background-color: @overlay-background-color;
+  border: 1px solid @overlay-border-color;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+
+  .csharpextensions-input-dialog-prompt {
+    display: block;
+    margin-bottom: @component-padding;
+    font-weight: 600;
+    color: @text-color;
+
+    &:before { margin-right: @component-padding / 2; }
+  }
+
+  atom-text-editor[mini] {
+    border-radius: @component-border-radius;
+    background-color: @input-background-color;
+    color: @text-color;
+  }
+
+  .csharpextensions-input-dialog-message {
+    margin-top: @component-padding / 2;
+    min-height: 1.6em;
+    font-size: .92em;
+
+    &.error { color: @text-color-error; }
+    &.hint  { color: @text-color-subtle; }
+  }
+}
+
+// ── Constructor property picker ───────────────────────────────────────
+.csharpextensions-constructor-picker {
+  width: 480px;
+  max-width: 90vw;
+  padding: @component-padding * 1.5;
+  border-radius: @component-border-radius;
+  background-color: @overlay-background-color;
+  border: 1px solid @overlay-border-color;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+  outline: none;
+
+  .csharpextensions-picker-title {
+    margin-bottom: @component-padding / 2;
+    font-weight: 600;
+    color: @text-color;
+  }
+
+  .csharpextensions-picker-toolbar {
+    display: flex;
+    gap: @component-padding / 2;
+    margin-bottom: @component-padding / 2;
+  }
+
+  .csharpextensions-picker-list {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: @component-padding / 2;
+    border: 1px solid @overlay-border-color;
+    border-radius: @component-border-radius;
+    background-color: @base-background-color;
+
+    label.csharpextensions-picker-row {
+      display: flex;
+      align-items: center;
+      gap: @component-padding / 2;
+      padding: 2px 4px;
+      margin: 0;
+      border-radius: 2px;
+      cursor: pointer;
+
+      &:hover { background-color: @background-color-highlight; }
+
+      .property-type { color: @text-color-subtle; }
+    }
+  }
+
+  .csharpextensions-picker-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: @component-padding / 2;
+    margin-top: @component-padding;
+  }
+}

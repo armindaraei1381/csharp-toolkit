@@ -1,0 +1,19 @@
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace ${namespace}
+{
+    [TestClass]
+    public class ${classname}
+    {
+        [TestMethod]
+        public void ${testmethodname}()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+            Assert.IsTrue(true);
+        }
+    }
+}

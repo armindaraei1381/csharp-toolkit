@@ -1,0 +1,43 @@
+{
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "C# Extensions",
+          "submenu": [
+            { "label": "New C# Class", "command": "csharpextensions:new-class" },
+            { "label": "New C# Interface", "command": "csharpextensions:new-interface" },
+            { "label": "New C# Enum", "command": "csharpextensions:new-enum" },
+            { "label": "New C# Struct", "command": "csharpextensions:new-struct" },
+            { "type": "separator" },
+            { "label": "Controller", "command": "csharpextensions:new-mvc-controller" },
+            { "label": "Api Controller", "command": "csharpextensions:new-api-controller" },
+            { "label": "Razor Page", "command": "csharpextensions:new-razor-page" },
+            { "type": "separator" },
+            { "label": "UWP Page", "command": "csharpextensions:new-uwp-page" },
+            { "label": "UWP Window", "command": "csharpextensions:new-uwp-window" },
+            { "label": "UWP UserControl", "command": "csharpextensions:new-uwp-usercontrol" },
+            { "label": "UWP Resource File", "command": "csharpextensions:new-uwp-resource" },
+            { "type": "separator" },
+            { "label": "XUnit Test", "command": "csharpextensions:new-xunit-test" },
+            { "label": "NUnit Test", "command": "csharpextensions:new-nunit-test" },
+            { "label": "MSTest", "command": "csharpextensions:new-mstest-test" },
+            { "type": "separator" },
+            { "label": "New Unit Test Class (default framework)", "command": "csharpextensions:new-unit-test" },
+            { "label": "Constructor from Properties", "command": "csharpextensions:constructor-from-properties" },
+            { "label": "Expression-bodied Constructor from Properties", "command": "csharpextensions:constructor-from-properties-expression-body" },
+            { "type": "separator" },
+            { "label": "Reload Custom Templates", "command": "csharpextensions:reload-custom-templates" }
+          ]
+        }
+      ]
+    }
+  ],
+  "context-menu": {
+    "atom-text-editor[data-grammar=\"source c#\"]:not([mini])": [
+      { "label": "Constructor from Properties", "command": "csharpextensions:constructor-from-properties" },
+      { "label": "Expression-bodied Constructor from Properties", "command": "csharpextensions:constructor-from-properties-expression-body" }
+    ]
+  }
+}
