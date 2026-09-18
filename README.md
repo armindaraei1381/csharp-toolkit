@@ -10,7 +10,7 @@ A complete C#/.NET toolkit for Pulsar: create whole .NET projects from the built
 
 ## ✨ Features
 
-### Create .NET Project *(new in 0.3.0)*
+### Create .NET Project
 
 - **Command palette ▸ `CSharp Toolkit: Create .NET Project`** → a searchable template picker (Console, Class Library, ASP.NET Core Web API, MVC, Blazor, MAUI, xUnit/NUnit/MSTest, …) with short names and tag descriptions.
 - Templates are read live from `dotnet new list`; if the CLI output cannot be parsed, a curated fallback list is shown — the picker always works.
