@@ -1,28 +1,67 @@
 @import "ui-variables";
 
-// ── Modal input dialog ────────────────────────────────────────────────
+// ─── Tune-me knobs ────────────────────────────────────────────────────
+// Change these to adjust the whole glass look in one place.
+@cse-blur:           28px;   // backdrop blur strength
+@cse-saturation:     165%;   // backdrop color saturation
+@cse-panel-opacity:  80%;    // panel background opacity (higher = more solid)
+@cse-radius:         12px;   // panel corner radius
+@cse-accent-1:       #7c5cff; // header gradient start (violet)
+@cse-accent-2:       #3d8bfd; // header gradient middle (blue)
+@cse-accent-3:       #2bd58c; // header gradient end (green)
+
+// ─── Shared glass panel ───────────────────────────────────────────────
+.csharp-toolkit-glass() {
+  background: fade(@overlay-background-color, @cse-panel-opacity);
+  backdrop-filter: blur(@cse-blur) saturate(@cse-saturation);
+  -webkit-backdrop-filter: blur(@cse-blur) saturate(@cse-saturation);
+  border: 1px solid fade(@text-color, 14%);
+  border-radius: @cse-radius;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, .40),
+    0 4px 12px rgba(0, 0, 0, .22),
+    inset 0 1px 0 fade(#fff, 7%);
+}
+
+.csharp-toolkit-mini-editor() {
+  atom-text-editor[mini] {
+    border-radius: 8px;
+    background-color: fade(@input-background-color, 65%);
+    border: 1px solid fade(@text-color, 12%);
+    color: @text-color;
+
+    &.is-focused,
+    &:focus {
+      border-color: fade(@text-color-info, 65%);
+      box-shadow: 0 0 0 3px fade(@text-color-info, 16%);
+    }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// ── Modal input dialog (project name / destination) ───────────────────
+// ══════════════════════════════════════════════════════════════════════
 .csharpextensions-input-dialog {
-  width: 440px;
+  .csharp-toolkit-glass();
+  .csharp-toolkit-mini-editor();
+
+  width: 480px;
   max-width: 90vw;
-  padding: @component-padding * 1.5;
-  border-radius: @component-border-radius;
-  background-color: @overlay-background-color;
-  border: 1px solid @overlay-border-color;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+  padding: @component-padding * 1.6;
+  overflow: hidden;
 
   .csharpextensions-input-dialog-prompt {
     display: block;
     margin-bottom: @component-padding;
     font-weight: 600;
+    font-size: 1.05em;
+    letter-spacing: .01em;
     color: @text-color;
 
-    &:before { margin-right: @component-padding / 2; }
-  }
-
-  atom-text-editor[mini] {
-    border-radius: @component-border-radius;
-    background-color: @input-background-color;
-    color: @text-color;
+    &:before {
+      margin-right: @component-padding / 2;
+      color: @text-color-info;
+    }
   }
 
   .csharpextensions-input-dialog-message {
@@ -35,47 +74,54 @@
   }
 }
 
+// ══════════════════════════════════════════════════════════════════════
 // ── Constructor property picker ───────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════
 .csharpextensions-constructor-picker {
-  width: 480px;
+  .csharp-toolkit-glass();
+
+  width: 500px;
   max-width: 90vw;
-  padding: @component-padding * 1.5;
-  border-radius: @component-border-radius;
-  background-color: @overlay-background-color;
-  border: 1px solid @overlay-border-color;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+  padding: @component-padding * 1.6;
   outline: none;
+  overflow: hidden;
 
   .csharpextensions-picker-title {
     margin-bottom: @component-padding / 2;
     font-weight: 600;
+    font-size: 1.05em;
     color: @text-color;
+
+    &:before { color: @text-color-info; }
   }
 
   .csharpextensions-picker-toolbar {
     display: flex;
     gap: @component-padding / 2;
     margin-bottom: @component-padding / 2;
+
+    .btn { border-radius: 6px; }
   }
 
   .csharpextensions-picker-list {
     max-height: 320px;
     overflow-y: auto;
     padding: @component-padding / 2;
-    border: 1px solid @overlay-border-color;
-    border-radius: @component-border-radius;
-    background-color: @base-background-color;
+    border: 1px solid fade(@text-color, 10%);
+    border-radius: 8px;
+    background-color: fade(@base-background-color, 55%);
 
     label.csharpextensions-picker-row {
       display: flex;
       align-items: center;
       gap: @component-padding / 2;
-      padding: 2px 4px;
+      padding: 3px 6px;
       margin: 0;
-      border-radius: 2px;
+      border-radius: 5px;
       cursor: pointer;
+      transition: background-color .12s ease;
 
-      &:hover { background-color: @background-color-highlight; }
+      &:hover { background-color: fade(@background-color-highlight, 60%); }
 
       .property-type { color: @text-color-subtle; }
     }
@@ -86,71 +132,238 @@
     justify-content: flex-end;
     gap: @component-padding / 2;
     margin-top: @component-padding;
+
+    .btn { border-radius: 6px; }
   }
 }
 
+// ══════════════════════════════════════════════════════════════════════
 // ── .NET project template select list ─────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════
 .csharp-toolkit-select-list-modal {
-  width: 560px;
-  max-width: 90vw;
-  padding: @component-padding * 1.5;
-  border-radius: @component-border-radius;
-  background-color: @overlay-background-color;
-  border: 1px solid @overlay-border-color;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+  .csharp-toolkit-glass();
+  .csharp-toolkit-mini-editor();
 
-  .csharp-toolkit-select-list-prompt {
-    display: block;
-    margin-bottom: @component-padding;
-    font-weight: 600;
-    color: @text-color;
+  position: relative;
+  width: 620px;
+  max-width: 92vw;
+  padding: @component-padding * 1.6;
+  overflow: hidden;
 
-    &:before { margin-right: @component-padding / 2; }
+  // Slim gradient accent bar on the top edge
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, @cse-accent-1, @cse-accent-2 45%, @cse-accent-3);
+    opacity: .9;
   }
 
-  atom-text-editor[mini] {
-    border-radius: @component-border-radius;
-    background-color: @input-background-color;
-    color: @text-color;
+  // ── Header ──
+  .csharp-toolkit-select-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid fade(@text-color, 10%);
+
+    .header-badge {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 19px;
+      background: linear-gradient(135deg, @cse-accent-1, @cse-accent-2);
+      box-shadow: 0 4px 14px fade(@cse-accent-1, 35%);
+    }
+
+    .header-text {
+      min-width: 0;
+
+      .header-title {
+        font-weight: 700;
+        font-size: 1.1em;
+        letter-spacing: .01em;
+        color: @text-color;
+      }
+
+      .header-subtitle {
+        margin-top: 1px;
+        font-size: .85em;
+        color: @text-color-subtle;
+      }
+    }
   }
 
+  // ── List ──
   ol.csharp-toolkit-select-list {
     margin: @component-padding / 2 0 0 0;
     padding: 0;
-    max-height: 320px;
+    max-height: 380px;
     overflow-y: auto;
     list-style: none;
-    border: 1px solid @overlay-border-color;
-    border-radius: @component-border-radius;
-    background-color: @base-background-color;
+    border: 1px solid fade(@text-color, 10%);
+    border-radius: 10px;
+    background-color: fade(@base-background-color, 45%);
 
-    li.list-item {
-      padding: @component-padding / 2 @component-padding;
+    li.csharp-toolkit-template-row {
+      display: grid;
+      grid-template-columns: 34px 1fr 16px;
+      align-items: center;
+      gap: 12px;
+      margin: 2px 4px;
+      padding: 7px 10px;
+      border-radius: 8px;
       cursor: pointer;
+      transition: background-color .12s ease;
 
-      &.selected { background-color: @background-color-selected; }
-
-      .primary-line {
-        font-weight: 600;
-        color: @text-color;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+      &.selected {
+        background-color: fade(@background-color-selected, 70%);
+        box-shadow: inset 0 0 0 1px fade(@text-color, 8%);
       }
 
-      .secondary-line {
+      .template-icon {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9px;
+        font-size: 16px;
+
+        &:before { margin: 0; } // neutralize octicon default margins
+      }
+
+      .template-content {
+        min-width: 0;
+
+        .template-name {
+          font-weight: 600;
+          color: @text-color;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .template-meta {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-top: 2px;
+          min-width: 0;
+
+          .chip {
+            display: inline-flex;
+            align-items: center;
+            height: 16px;
+            padding: 0 6px;
+            border-radius: 4px;
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: .02em;
+            white-space: nowrap;
+          }
+
+          .template-tags {
+            color: @text-color-subtle;
+            font-size: .88em;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .row-chevron {
         color: @text-color-subtle;
-        font-size: .9em;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        opacity: 0;
+        transition: opacity .12s ease;
+
+        &:before { margin: 0; }
       }
+
+      &:hover .row-chevron,
+      &.selected .row-chevron { opacity: .8; }
     }
 
     li.csharp-toolkit-select-list-empty {
-      padding: @component-padding / 2 @component-padding;
+      padding: @component-padding;
       color: @text-color-subtle;
       text-align: center;
+      font-style: italic;
+    }
+
+    // Slim custom scrollbar
+    &::-webkit-scrollbar { width: 8px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: fade(@text-color, 18%);
+      border-radius: 4px;
+
+      &:hover { background: fade(@text-color, 30%); }
     }
   }
+
+  // ── Footer: keyboard hints + result counter ──
+  .csharp-toolkit-select-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: @component-padding;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid fade(@text-color, 10%);
+    color: @text-color-subtle;
+    font-size: 11px;
+
+    .hints {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+
+      .hint {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+
+    .count {
+      white-space: nowrap;
+      opacity: .9;
+    }
+  }
+
+  kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 4px;
+    border: 1px solid fade(@text-color, 20%);
+    border-bottom-width: 2px;
+    background: fade(@text-color, 8%);
+    color: @text-color;
+    font-size: 10px;
+    font-family: inherit;
+  }
 }
+
+// ── Accent palette (icon badges & chips) ──────────────────────────────
+.accent-blue   { color: #4c9aff; background: fade(#4c9aff, 15%); }
+.accent-green  { color: #3fbf7f; background: fade(#3fbf7f, 15%); }
+.accent-orange { color: #f0954c; background: fade(#f0954c, 15%); }
+.accent-violet { color: #a371f7; background: fade(#a371f7, 15%); }
+.accent-cyan   { color: #2bc0d6; background: fade(#2bc0d6, 15%); }
+.accent-teal   { color: #2ec4a5; background: fade(#2ec4a5, 15%); }
+.accent-gray   { color: @text-color; background: fade(@text-color, 10%); }
