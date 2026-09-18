@@ -1,0 +1,21 @@
+{
+  ".tree-view": {
+    "ctrl-alt-n": "csharp-toolkit:new-class"
+  },
+  "atom-workspace atom-text-editor:not([mini])": {
+    "ctrl-alt-shift-c": "csharp-toolkit:constructor-from-properties",
+    "ctrl-alt-shift-e": "csharp-toolkit:constructor-from-properties-expression-body"
+  },
+  ".csharpextensions-input-dialog atom-text-editor[mini]": {
+    "enter": "core:confirm",
+    "escape": "core:cancel"
+  },
+  ".csharpextensions-constructor-picker": {
+    "enter": "core:confirm",
+    "escape": "core:cancel"
+  },
+  ".csharp-toolkit-select-list-modal atom-text-editor[mini]": {
+    "enter": "core:confirm",
+    "escape": "core:cancel"
+  }
+}

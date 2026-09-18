@@ -88,3 +88,69 @@
     margin-top: @component-padding;
   }
 }
+
+// ── .NET project template select list ─────────────────────────────────
+.csharp-toolkit-select-list-modal {
+  width: 560px;
+  max-width: 90vw;
+  padding: @component-padding * 1.5;
+  border-radius: @component-border-radius;
+  background-color: @overlay-background-color;
+  border: 1px solid @overlay-border-color;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .35);
+
+  .csharp-toolkit-select-list-prompt {
+    display: block;
+    margin-bottom: @component-padding;
+    font-weight: 600;
+    color: @text-color;
+
+    &:before { margin-right: @component-padding / 2; }
+  }
+
+  atom-text-editor[mini] {
+    border-radius: @component-border-radius;
+    background-color: @input-background-color;
+    color: @text-color;
+  }
+
+  ol.csharp-toolkit-select-list {
+    margin: @component-padding / 2 0 0 0;
+    padding: 0;
+    max-height: 320px;
+    overflow-y: auto;
+    list-style: none;
+    border: 1px solid @overlay-border-color;
+    border-radius: @component-border-radius;
+    background-color: @base-background-color;
+
+    li.list-item {
+      padding: @component-padding / 2 @component-padding;
+      cursor: pointer;
+
+      &.selected { background-color: @background-color-selected; }
+
+      .primary-line {
+        font-weight: 600;
+        color: @text-color;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .secondary-line {
+        color: @text-color-subtle;
+        font-size: .9em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    li.csharp-toolkit-select-list-empty {
+      padding: @component-padding / 2 @component-padding;
+      color: @text-color-subtle;
+      text-align: center;
+    }
+  }
+}

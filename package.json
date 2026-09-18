@@ -1,28 +1,15 @@
 {
-  "name": "csharpextensions-pulsar",
+  "name": "csharp-toolkit",
   "main": "./lib/main",
   "version": "0.3.0",
-  "description": "Create C# classes, interfaces, enums, structs, records, controllers, Razor pages, UWP views and constructors from the tree view or the command palette. A native Pulsar port of the popular csharpextensions extension for VS Code.",
+  "description": "A C#/.NET toolkit for Pulsar: create whole .NET projects and scaffold classes, interfaces, controllers, Razor pages, UWP views, test classes and constructors — right from the tree view. Formerly published as csharpextensions-pulsar.",
   "keywords": [
-    "csharp",
-    "c#",
-    "dotnet",
-    "class",
-    "interface",
-    "enum",
-    "struct",
-    "record",
-    "constructor",
-    "template",
-    "scaffolding",
-    "mvc",
-    "razor",
-    "uwp",
-    "xunit",
-    "nunit",
-    "mstest"
+    "csharp", "c#", "dotnet", "class", "interface", "enum",
+    "struct", "record", "constructor", "template", "scaffolding",
+    "mvc", "razor", "uwp", "xunit", "nunit", "mstest",
+    "project", "maui", "blazor", "webapi"
   ],
-  "repository": "https://github.com/armindaraei1381/csharpextensions-pulsar",
+  "repository": "https://github.com/armindaraei1381/csharp-toolkit",
   "license": "MIT",
   "author": {
     "name": "Armin Daraei",
@@ -39,14 +26,8 @@
       "default": "block",
       "order": 1,
       "enum": [
-        {
-          "value": "block",
-          "description": "Block scoped — namespace X { ... }"
-        },
-        {
-          "value": "file-scoped",
-          "description": "File scoped — namespace X;"
-        }
+        { "value": "block", "description": "Block scoped — namespace X { ... }" },
+        { "value": "file-scoped", "description": "File scoped — namespace X;" }
       ]
     },
     "enableNullable": {
@@ -69,14 +50,8 @@
       "default": "allman",
       "order": 4,
       "enum": [
-        {
-          "value": "allman",
-          "description": "Allman — opening brace on its own line"
-        },
-        {
-          "value": "k&r",
-          "description": "K&R — opening brace on the same line"
-        }
+        { "value": "allman", "description": "Allman — opening brace on its own line" },
+        { "value": "k&r", "description": "K&R — opening brace on the same line" }
       ]
     },
     "constructorStyle": {
@@ -86,14 +61,8 @@
       "default": "regular",
       "order": 5,
       "enum": [
-        {
-          "value": "regular",
-          "description": "Classic block body"
-        },
-        {
-          "value": "expression-bodied",
-          "description": "Expression bodied (`=>`)"
-        }
+        { "value": "regular", "description": "Classic block body" },
+        { "value": "expression-bodied", "description": "Expression bodied (`=>`)" }
       ]
     },
     "testFramework": {
@@ -103,18 +72,9 @@
       "default": "xunit",
       "order": 6,
       "enum": [
-        {
-          "value": "xunit",
-          "description": "xUnit"
-        },
-        {
-          "value": "mstest",
-          "description": "MSTest"
-        },
-        {
-          "value": "nunit",
-          "description": "NUnit"
-        }
+        { "value": "xunit", "description": "xUnit" },
+        { "value": "mstest", "description": "MSTest" },
+        { "value": "nunit", "description": "NUnit" }
       ]
     },
     "confirmUsingDirectives": {
@@ -130,14 +90,8 @@
       "default": "en",
       "order": 8,
       "enum": [
-        {
-          "value": "en",
-          "description": "English"
-        },
-        {
-          "value": "fa",
-          "description": "فارسی (Persian)"
-        }
+        { "value": "en", "description": "English" },
+        { "value": "fa", "description": "فارسی (Persian)" }
       ]
     },
     "hideAspNetGroupWhenNotNeeded": {
@@ -153,6 +107,18 @@
       "type": "boolean",
       "default": true,
       "order": 10
+    },
+    "openCreatedProjectIn": {
+      "title": "Open created .NET project",
+      "description": "Where to open a freshly scaffolded .NET project after `dotnet new` finishes.",
+      "type": "string",
+      "default": "ask",
+      "order": 11,
+      "enum": [
+        { "value": "ask", "description": "Ask with a notification" },
+        { "value": "current-window", "description": "Always in the current window" },
+        { "value": "new-window", "description": "Always in a new window" }
+      ]
     }
   },
   "consumedServices": {

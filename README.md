@@ -1,48 +1,44 @@
-# C# Extensions for Pulsar
+# CSharp Toolkit for Pulsar
 
-**Version License:** MIT
+**VersionLicense:** MIT
 
-Create C# classes, interfaces, enums, structs, records, static/abstract classes, unit-test classes and ready-to-go constructors straight from the tree view or the command palette — right inside Pulsar.
+A complete C#/.NET toolkit for Pulsar: create whole .NET projects from the built-in templates, scaffold classes, interfaces, controllers, Razor pages, UWP views, test classes and ready-to-go constructors — all from the tree view or the command palette.
 
-This package is a full, native Pulsar port of the popular `csharpextensions` extension for VS Code (and its KreativJos fork), rebuilt on top of the Atom/Pulsar APIs (`atom.commands`, `atom.workspace`, the tree-view service, Pulsar menus & keymaps) — plus a set of modern C# extras.
-
+> **Note:** Formerly published as `csharpextensions-pulsar`. See the [migration note](#-migration-from-csharpextensions-pulsar) below.
 
 ---
 
 ## ✨ Features
 
-### Core (parity with the VS Code extension)
+### Create .NET Project *(new in 0.3.0)*
 
-- Add C# Class / Interface / Enum / Struct from the tree-view context menu or the command palette, with an auto-resolved namespace.
-- **Constructor from Properties** — generates a constructor that assigns every selected property.
-- **Expression-bodied Constructor from Properties** (`=>`) for modern C#.
-- Namespace resolution walks up to the nearest `.csproj` (or legacy `project.json`), honours `<RootNamespace>` and appends the relative folder path (`MyApp/Services` → `MyApp.Services`).
-- Editable templates with `${namespace}` / `${classname}` placeholders.
-- Right-click a folder (or a `.cs` file) in the tree view → **C# Extensions**.
+- **Command palette ▸ `CSharp Toolkit: Create .NET Project`** → a searchable template picker (Console, Class Library, ASP.NET Core Web API, MVC, Blazor, MAUI, xUnit/NUnit/MSTest, …) with short names and tag descriptions.
+- Templates are read live from `dotnet new list`; if the CLI output cannot be parsed, a curated fallback list is shown — the picker always works.
+- Enter the project name and destination folder (validated live), and the package runs `dotnet new <template> -n <name> -o <path>` with a progress notification and clear error reporting (including a *"install the .NET SDK"* helper when `dotnet` is missing).
+- Optionally opens the new project in the same or a new Pulsar window (configurable; default: **ask**).
 
-### Extras beyond the original
+### File scaffolding
 
-- 🆕 **File-scoped namespaces** (`namespace X;` — C# 10+) via settings.
-- 🆕 **Nullable reference types** (`#nullable enable` header) via settings.
-- 🆕 **More templates:** Abstract Class, Static Class, Record, Record Struct, Unit Test Class (xUnit / MSTest / NUnit — selectable).
-- 🆕 **Using-Directive Auto-Suggest:** missing usings for property types (`List<T>`, `HttpClient`, `ILogger`, …) are detected and added (with your confirmation, or silently — your choice).
-- 🆕 **Full identifier validation:** legal characters, no leading digits, reserved & contextual keyword detection, verbatim `@` support, Unicode names.
-- 🆕 **Multi-root workspace support.**
-- 🆕 **Custom user templates:** drop `*.cs.template` files into `~/.pulsar/csharpextensions-templates/` and they appear in the menus (**Packages ▸ C# Extensions ▸ Custom templates**). Available variables: `${namespace}`, `${classname}`, `${year}`, `${date}`.
-- 🆕 **Bilingual messages:** English / فارسی (with RTL dialogs), switchable in **Settings**.
-- 🎨 Fully theme-aware UI using Pulsar's standard style variables and Octicon icon classes.
+- New **C# Class / Interface / Enum / Struct / Record / Record Struct / Abstract Class / Static Class** with auto-resolved namespaces.
+- **MVC Controller**, **API Controller** (CRUD skeleton), **Razor Page** (`Name.cshtml` + `Name.cshtml.cs`), **UWP Page / Window / UserControl** (`Name.xaml` + `Name.xaml.cs`), **UWP Resource File** (`.resw`).
+- **xUnit / NUnit / MSTest** test classes, plus a generic **New Unit Test Class** command driven by the `testFramework` setting.
+- **Constructor from Properties** (block or expression-bodied) with automatic missing-using detection (xUnit-style confirmation or silent).
+- Smart tree-view context menu (*"New C#"*) that hides the ASP.NET/UWP groups in projects that don't need them.
 
-> ℹ️ The tree-view context-menu items appear after the package has been activated once (e.g. by running any command from the palette) — this is how Pulsar's lazy `activationCommands` work.
+### Quality-of-life
+
+- C# 10 file-scoped namespaces, nullable header, Allman/K&R braces, interface prefix — all configurable.
+- Full identifier validation (keywords, Unicode, verbatim `@`).
+- Custom user templates in `~/.pulsar/csharpextensions-templates/`.
+- Bilingual messages: **English / فارسی** (RTL-aware dialogs).
 
 ---
 
 ## 📦 Installation
 
 ```bash
-ppm install csharpextensions-pulsar
+ppm install csharp-toolkit
 ```
-
-or via Pulsar: **Settings ▸ Install ▸ csharpextensions-pulsar**.
 
 ---
 
@@ -50,44 +46,57 @@ or via Pulsar: **Settings ▸ Install ▸ csharpextensions-pulsar**.
 
 | Action | How |
 | --- | --- |
-| New class / interface / enum / struct / … | Right-click a folder in the tree view ▸ **C# Extensions**, or Command Palette ▸ **C# Extensions: New …** |
-| Constructor from properties | Place the cursor inside a class, then palette ▸ `csharpextensions:constructor-from-properties` |
-| Expression-bodied constructor | `csharpextensions:constructor-from-properties-expression-body` |
-
-### Default keybindings
-
-| Keys | Command |
-| --- | --- |
-| `ctrl-alt-n` | New C# Class |
-| `ctrl-alt-shift-c` | Constructor from Properties |
-| `ctrl-alt-shift-e` | Expression-bodied Constructor from Properties |
+| Create a whole .NET project | Command Palette ▸ `CSharp Toolkit: Create .NET Project` *(requires the .NET SDK on PATH)* |
+| New class / interface / … | Right-click a folder in the tree view ▸ **New C#**, or the Command Palette |
+| Constructor from properties | Cursor inside a class ▸ `Ctrl+Alt+Shift+C` |
 
 ---
 
 ## ⚙️ Settings
 
-| Setting | Options | Default |
-| --- | --- | --- |
-| Namespace style | `block` / `file-scoped` | `block` |
-| Nullable reference types | `on` / `off` | `off` |
-| Interface prefix | any string (empty = disabled) | `I` |
-| Brace style | `allman` / `k&r` | `allman` |
-| Default constructor style | `regular` / `expression-bodied` | `regular` |
-| Unit test framework | `xunit` / `mstest` / `nunit` | `xunit` |
-| Confirm adding usings | `on` / `off` | `on` |
-| Message language | `en` / `fa` | `en` |
+| Setting | Default |
+| --- | --- |
+| Namespace style (block / file-scoped) | `block` |
+| Nullable reference types header | `off` |
+| Interface prefix | `I` |
+| Brace style | `allman` |
+| Default constructor style | `regular` |
+| Unit test framework | `xunit` |
+| Confirm adding usings | `on` |
+| Hide ASP.NET/UWP groups in non-matching projects | `on` |
+| Open created .NET project (ask / current / new window) | `ask` |
+| Message language | `en` |
 
+---
+
+## ⚠️ Migration from `csharpextensions-pulsar`
+
+This package was **renamed** from `csharpextensions-pulsar` to `csharp-toolkit` in version `0.3.0`. There is no automatic migration between the two registry entries: please **uninstall the old package and install `csharp-toolkit`**.
+
+Your settings are migrated automatically on first run (copied from the old `csharpextensions-pulsar.*` config scope into `csharp-toolkit.*`), and all command names now use the `csharp-toolkit:` prefix — update any personal keybindings that referenced the old prefix.
+
+---
+
+## 🛠 Development
+
+```bash
+git clone https://github.com/armindaraei1381/csharp-toolkit
+cd csharp-toolkit
+ppm install
+ppm link
+# Reload Pulsar, then: View ▸ Developer ▸ Run Package Specs
+ppm test
+```
 
 ---
 
 ## 👏 Credits
 
 - **Author & maintainer:** Armin Daraei
-- Inspired by — and developed in gratitude to — [jchannon/csharpextensions](https://github.com/jchannon/csharpextensions) by Justin Channon and the [KreativJos/csharpextensions](https://github.com/KreativJos/csharpextensions) fork.
-- This package is an independent, native re-implementation for Pulsar, not a port of their source code.
+- Inspired by — and developed in gratitude to — [`jchannon/csharpextensions`](https://github.com/jchannon/csharpextensions) by Justin Channon and the [`KreativJos/csharpextensions`](https://github.com/KreativJos/csharpextensions) fork for VS Code. This package is an independent, native re-implementation for Pulsar, **not** a port of their source code.
 
 ---
 
 ## 📄 License
 
-MIT — this is a derivative work of an MIT-licensed project; the original license notice is preserved in `LICENSE.txt`.
+**MIT** — this is a derivative work of an MIT-licensed project; the original license notice is preserved in `LICENSE.txt`.
