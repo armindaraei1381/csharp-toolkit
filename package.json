@@ -1,7 +1,7 @@
 {
   "name": "csharp-toolkit",
   "main": "./lib/main",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A C#/.NET toolkit for Pulsar: create whole .NET projects and scaffold classes, interfaces, controllers, Razor pages, UWP views, test classes and constructors — right from the tree view. Formerly published as csharpextensions-pulsar.",
   "keywords": [
     "csharp",
